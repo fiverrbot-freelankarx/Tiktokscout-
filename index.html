@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>TikTok Scout Tool</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      padding: 30px;
+    }
+    h1 {
+      color: #333;
+    }
+    input, button {
+      padding: 10px;
+      margin: 10px 0;
+      width: 100%;
+      max-width: 500px;
+      font-size: 16px;
+    }
+    button {
+      background-color: #111;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+    }
+    a {
+      color: #0066cc;
+    }
+  </style>
+</head>
+<body>
+  <h1>TikTok Video Finder (Manual Scout)</h1>
+
+  <label>Enter keywords (e.g. "online business", "dropshipping")</label>
+  <input type="text" id="keywords" placeholder="Your search terms" />
+
+  <label>Enter location filter (optional, e.g. "UK")</label>
+  <input type="text" id="location" placeholder="Location (optional)" />
+
+  <button onclick="generateSearch()">Generate Search Link</button>
+
+  <div id="output" style="margin-top: 20px;"></div>
+
+  <script>
+    function generateSearch() {
+      const keywords = document.getElementById('keywords').value.trim();
+      const location = document.getElementById('location').value.trim();
+      if (!keywords) {
+        alert("Please enter a keyword.");
+        return;
+      }
+
+      const date = new Date();
+      const yyyy = date.getFullYear();
+      const mm = String(date.getMonth() + 1).padStart(2, '0');
+      const dd = String(date.getDate()).padStart(2, '0');
+      const today = `${yyyy}-${mm}-${dd}`;
+
+      const base = `site:tiktok.com ${keywords} ${location} after:${today}`;
+      const encoded = encodeURIComponent(base);
+      const url = `https://www.google.com/search?q=${encoded}`;
+
+      document.getElementById('output').innerHTML = `
+        <p><strong>Click to search:</strong></p>
+        <p><a href="${url}" target="_blank">${url}</a></p>
+        <p>Use filters in Google manually for freshness and relevance.</p>
+      `;
+    }
+  </script>
+</body>
+    </html>
