@@ -1,0 +1,33 @@
+name: TikTok Scraping
+
+on:
+  workflow_dispatch:  # This triggers the action manually via GitHub UI
+  
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout the repository
+      uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.8'
+
+    - name: Install dependencies
+      run: |
+        pip install requests serpapi
+    
+    - name: Run scraper script
+      run: |
+        python scrape_tiktok.py
+      env:
+        SERPAPI_API_KEY: ${{ secrets.SERPAPI_API_KEY }}
+
+    - name: Commit result to repo
+      run: |
+        git add result.json
+        git commit -m "Add latest TikTok video results"
+        git push
